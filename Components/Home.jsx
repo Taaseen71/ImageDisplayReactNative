@@ -30,7 +30,7 @@ export default function Home({ imageList, setImageList, urlInput, seturlInput, u
                     <Image source={{ uri: itemData.item.photo }} style={styles.ImageList} resizeMode="contain" />
                     <View style={styles.textDescription}>
                         <Text >{itemData.item.description}</Text>
-                        <Text> {itemData.item._id}</Text>
+                        {/* <Text> {itemData.item._id}</Text> */}
                         <View style={styles.sidebyside}>
                             <Link component={TouchableOpacity} style={styles.header} to="/editImage">
                                 <Text style={styles.nativeLink}>Edit</Text>

@@ -29,8 +29,8 @@ export default function App() {
     useEffect(() => {
         // setImageList(images);
         getData()
-        console.log('imageList = ', imageList[0].photo)
-    }, [])
+        // console.log('imageList = ', imageList[0].photo)
+    }, [imageList])
 
     const getData = () => {
         axios.get('http://localhost:5000/images')
@@ -42,27 +42,6 @@ export default function App() {
     }
 
 
-    const postData = () => {
-        setnewImage({
-            photo: urlInput,
-            description: urlDescription,
-            date: new Date()
-        })
-
-        console.log("newImage : ", newImage)
-        axios.post('http://localhost:5000/images/add', newImage)
-            .then(res => alert(res.data))
-
-
-        seturlInput("");
-        seturlDescription("");
-
-        // console.log(urlInput)
-        // console.log(urlDescription)
-
-        // alert('Added')
-
-    }
 
 
     const handleAdd = () => {
@@ -87,7 +66,7 @@ export default function App() {
                 <Text style={styles.introHeader}> #ohSaadPhotography </Text>
                 <Switch>
                     <Route exact path="/createImage">
-                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} newImage={newImage} setnewImage={setnewImage} postData={postData} />
+                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} newImage={newImage} setnewImage={setnewImage} />
                     </Route>
 
                     <Route exact path="/" >

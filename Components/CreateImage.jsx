@@ -1,10 +1,30 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TextInput, Linking, TouchableOpacity } from 'react-native';
 import { NativeRouter, Route, Link, Switch } from "react-router-native";
+import axios from 'axios'
+
+
+export default function CreateImage({ urlInput, seturlInput, urlDescription, seturlDescription, handleAdd, newImage, setnewImage }) {
 
 
 
-export default function CreateImage({ urlInput, seturlInput, urlDescription, seturlDescription, handleAdd, newImage, setnewImage, postData }) {
+    const postData = async () => {
+        const newImage = ({
+            photo: urlInput,
+            description: urlDescription,
+            date: new Date()
+        })
+
+        console.log("newImage : ", newImage)
+        axios.post('http://localhost:5000/images/add', newImage)
+            .then(res => alert(res.data))
+
+        seturlInput("");
+        seturlDescription("");
+    }
+
+
+
 
 
     return (
