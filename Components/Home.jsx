@@ -20,9 +20,9 @@ export default function Home({ imageList, setImageList, urlInput, seturlInput, u
                     <Link component={TouchableOpacity} style={styles.header} to="/createImage">
                         <Text style={styles.nativeLink}>Upload</Text>
                     </Link>
-                    <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                    {/* <Link component={TouchableOpacity} style={styles.header} to="/editImage">
                         <Text style={styles.nativeLink}>Edit</Text>
-                    </Link>
+                    </Link> */}
                 </View>
             </View>
             <FlatList data={imageList} renderItem={itemData => (
@@ -33,8 +33,12 @@ export default function Home({ imageList, setImageList, urlInput, seturlInput, u
                         <Text >{itemData.item.description}</Text>
                         <Text> {itemData.item.id}</Text>
                         <View style={styles.sidebyside}>
-                            <Button title="Edit" />
-                            <Button title="Delete" />
+                            <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                                <Text style={styles.nativeLink}>Edit</Text>
+                            </Link>
+                            <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                                <Text style={styles.nativeLink}>Delete</Text>
+                            </Link>
                         </View>
                     </View>
                 </View>
@@ -65,7 +69,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 10,
-        fontSize: 18
+        fontSize: 18,
+        fontWeight: "600"
     },
     header: {
         justifyContent: "center",
