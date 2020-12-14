@@ -49,22 +49,28 @@ export default function App() {
             date: new Date()
         })
 
+        console.log("newImage : ", newImage)
+        axios.post('http://localhost:5000/images/add', newImage)
+            .then(res => alert(res.data))
+
+
         seturlInput("");
         seturlDescription("");
 
-        // console.log(newImage)
+        // console.log(urlInput)
+        // console.log(urlDescription)
 
-        axios.post('http://localhost:5000/images/add', newImage)
-            .then(res => alert(res.data))
+        // alert('Added')
+
     }
 
 
     const handleAdd = () => {
-        const newImage = urlInput
+        const currentImage = urlInput
         const description = urlDescription
         setImageList([...imageList, {
             // id: uuidV4(),
-            photo: newImage,
+            photo: currentImage,
             description: description
         }])
         seturlInput("");
