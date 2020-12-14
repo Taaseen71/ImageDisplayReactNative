@@ -17,14 +17,46 @@ export default function App() {
     const [imageList, setImageList] = useState([{}])
     const [urlInput, seturlInput] = useState("")
     const [urlDescription, seturlDescription] = useState("")
-
+    const [urlDate, seturlDate] = useState("")
+    const [newImage, setnewImage] = useState({
+        photo: "",
+        description: "",
+        date: ""
+    })
 
 
 
     useEffect(() => {
-        setImageList(images);
-        // console.log('imageList = ', imageList[0].photo)
+        // setImageList(images);
+        getData()
+        console.log('imageList = ', imageList[0].photo)
     }, [])
+
+    const getData = () => {
+        axios.get('http://localhost:5000/images')
+            .then(function (res) {
+                // console.log(res.data);
+                setImageList(res.data)
+            })
+        return imageList
+    }
+
+
+    const postData = () => {
+        setnewImage({
+            photo: urlInput,
+            description: urlDescription,
+            date: new Date()
+        })
+
+        seturlInput("");
+        seturlDescription("");
+
+        // console.log(newImage)
+
+        axios.post('http://localhost:5000/images/add', newImage)
+            .then(res => alert(res.data))
+    }
 
 
     const handleAdd = () => {
@@ -49,7 +81,7 @@ export default function App() {
                 <Text style={styles.introHeader}> #ohSaadPhotography </Text>
                 <Switch>
                     <Route exact path="/createImage">
-                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} />
+                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} newImage={newImage} setnewImage={setnewImage} postData={postData} />
                     </Route>
 
                     <Route exact path="/" >

@@ -4,14 +4,19 @@ import { NativeRouter, Route, Link, Switch } from "react-router-native";
 
 
 
-export default function CreateImage({ imageList, setImageList, urlInput, seturlInput, urlDescription, seturlDescription, handleAdd, history }) {
+export default function CreateImage({ urlInput, seturlInput, urlDescription, seturlDescription, handleAdd, newImage, setnewImage, postData }) {
+
+
     return (
         <View style={styles.textDescription}>
             {/* <Button title="Home" onPress={() => history.push("/")} /> */}
             <Text > ImageUploader </Text>
             <TextInput placeholder="Enter New Image URL" value={urlInput} onChangeText={e => seturlInput(e)} />
             <TextInput placeholder="Description for this Photo" value={urlDescription} onChangeText={e => seturlDescription(e)} />
-            <Button title="Add" onPress={handleAdd} />
+            <Button title="Add"
+                // onPress={handleAdd}
+                onPress={postData}
+            />
             <Link component={TouchableOpacity} style={styles.textDescription} to="/">
                 <Text style={styles.nativeLink}>Back to Home</Text>
                 {/* <Button title="Home" onPress={() => Linking.openURL('/')} /> */}
