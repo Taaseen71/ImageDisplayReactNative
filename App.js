@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TextInput } from 'react-native';
+import { NativeRouter, Route, Link, Switch } from "react-router-native";
+import Home from "./Components/Home";
+import CreateImage from "./Components/CreateImage"
+import EditImage from "./Components/EditImage"
 import images from './Components/imageLists.json'
 import { v4 as uuidV4 } from 'uuid'
 // import { save } from 'save-file'
-var fs = require('fs');
 
+import axios from 'axios';
 
 
 export default function App() {
@@ -26,7 +30,11 @@ export default function App() {
     const handleAdd = () => {
         const newImage = urlInput
         const description = urlDescription
-        setImageList([...imageList, { id: uuidV4(), photo: newImage, description: description }])
+        setImageList([...imageList, {
+            // id: uuidV4(),
+            photo: newImage,
+            description: description
+        }])
         seturlInput("");
         seturlDescription("");
         let images = JSON.stringify(imageList);
@@ -34,32 +42,32 @@ export default function App() {
 
     }
 
-
     return (
-        <View style={styles.container}>
-            <Text> ImageUploader </Text>
-            <TextInput placeholder="Enter New Image URL" value={urlInput} onChangeText={e => seturlInput(e)} />
-            <TextInput placeholder="Description for this Photo" value={urlDescription} onChangeText={e => seturlDescription(e)} />
-            <Button title="Add" onPress={handleAdd} />
-            <FlatList data={imageList} renderItem={itemData => (
-                <View style={styles.imageContainer} >
-                    {/* <Text> {itemData.item.id}</Text> */}
-                    <Image source={{ uri: itemData.item.photo }} style={styles.ImageList} resizeMode="contain" />
-                    <View style={styles.textDescription}>
-                        <Text >{itemData.item.description}</Text>
-                        <Text> {itemData.item.id}</Text>
-                    </View>
-                </View>
-            )} />
-            <StatusBar style="auto" />
-        </View>
+        <NativeRouter >
+            <View style={styles.container}>
+                <Text style={styles.introHeader}> Photos By Saad </Text>
+                <Text style={styles.introHeader}> #ohSaadPhotography </Text>
+                <Switch>
+                    <Route exact path="/createImage">
+                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} />
+                    </Route>
+
+                    <Route exact path="/" >
+                        <Home imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} />
+                    </Route>
+                    <Route exact path="/editImage"><EditImage /></Route>
+                </Switch>
+            </View>
+        </NativeRouter>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
+        backgroundColor: "#E0E0E0",
+        // backgroundColor: "#DB7734",
         paddingTop: 80,
         alignItems: 'center',
         justifyContent: 'center',
@@ -75,12 +83,12 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         marginVertical: 100
+    },
+    introHeader: {
+        fontSize: 20,
+        // color: "#7634DB",
+        fontWeight: "bold",
     }
 });
 
 
- // {
-    //     "id": "",
-    //     "photo": "",
-    //     "description": ""
-    // },
