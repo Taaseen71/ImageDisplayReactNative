@@ -33,7 +33,8 @@ export default function App() {
     }, [imageList])
 
     const getData = () => {
-        axios.get('http://localhost:5000/images')
+        // axios.get('http://localhost:5000/images')
+        axios.get('https://photosbysaad.herokuapp.com/images')
             .then(function (res) {
                 // console.log(res.data);
                 setImageList(res.data)
