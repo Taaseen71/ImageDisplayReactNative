@@ -17,22 +17,39 @@ export default function App() {
     const [imageList, setImageList] = useState([{}])
     const [urlInput, seturlInput] = useState("")
     const [urlDescription, seturlDescription] = useState("")
-
+    const [urlDate, seturlDate] = useState("")
+    const [newImage, setnewImage] = useState({
+        photo: "",
+        description: "",
+        date: ""
+    })
 
 
 
     useEffect(() => {
-        setImageList(images);
+        // setImageList(images);
+        getData()
         // console.log('imageList = ', imageList[0].photo)
-    }, [])
+    }, [imageList])
+
+    const getData = () => {
+        axios.get('http://localhost:5000/images')
+            .then(function (res) {
+                // console.log(res.data);
+                setImageList(res.data)
+            })
+        return imageList
+    }
+
+
 
 
     const handleAdd = () => {
-        const newImage = urlInput
+        const currentImage = urlInput
         const description = urlDescription
         setImageList([...imageList, {
             // id: uuidV4(),
-            photo: newImage,
+            photo: currentImage,
             description: description
         }])
         seturlInput("");
@@ -49,7 +66,7 @@ export default function App() {
                 <Text style={styles.introHeader}> #ohSaadPhotography </Text>
                 <Switch>
                     <Route exact path="/createImage">
-                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} />
+                        <CreateImage imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} handleAdd={handleAdd} newImage={newImage} setnewImage={setnewImage} />
                     </Route>
 
                     <Route exact path="/" >

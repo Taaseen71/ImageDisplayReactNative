@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { NativeRouter, Route, Link, Switch } from "react-router-native";
 
-export default function Home({ imageList, setImageList, urlInput, seturlInput, urlDescription, seturlDescription, history }) {
+
+export default function Home({ imageList, setImageList, urlInput, seturlInput, urlDescription, seturlDescription, backendPhotos }) {
     return (
         <View >
             {/* <Button title="Upload" onPress={() => history.push("/createImage")} /> */}
@@ -20,29 +21,34 @@ export default function Home({ imageList, setImageList, urlInput, seturlInput, u
                     <Link component={TouchableOpacity} style={styles.header} to="/createImage">
                         <Text style={styles.nativeLink}>Upload</Text>
                     </Link>
-                    {/* <Link component={TouchableOpacity} style={styles.header} to="/editImage">
-                        <Text style={styles.nativeLink}>Edit</Text>
-                    </Link> */}
+
                 </View>
             </View>
-            <FlatList data={imageList} renderItem={itemData => (
-                <View style={styles.imageContainer} >
-                    {/* <Text> {itemData.item.id}</Text> */}
-                    <Image source={{ uri: itemData.item.photo }} style={styles.ImageList} resizeMode="contain" />
-                    <View style={styles.textDescription}>
-                        <Text >{itemData.item.description}</Text>
-                        <Text> {itemData.item.id}</Text>
-                        <View style={styles.sidebyside}>
-                            <Link component={TouchableOpacity} style={styles.header} to="/editImage">
-                                <Text style={styles.nativeLink}>Edit</Text>
-                            </Link>
-                            <Link component={TouchableOpacity} style={styles.header} to="/editImage">
-                                <Text style={styles.nativeLink}>Delete</Text>
-                            </Link>
+
+            <FlatList
+                // horizontal //?Stacks Horizontally
+                inverted   //?Stacks Inverted but upsidedown. 
+                keyExtractor={(item, index) => index.toString()}
+                data={imageList}
+                renderItem={({ item }) => (
+                    <View style={styles.imageContainer} >
+                        <Image source={{ uri: item.photo }} style={styles.ImageList} resizeMode="contain" />
+                        <View style={styles.textDescription}>
+                            <Text >{item.description}</Text>
+                            {/* <Text> {item._id}</Text> */}
+                        </View>
+                        <View style={styles.textDescription}>
+                            <View style={styles.sidebyside}>
+                                <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                                    <Text style={styles.nativeLink}>Edit</Text>
+                                </Link>
+                                <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                                    <Text style={styles.nativeLink}>Delete</Text>
+                                </Link>
+                            </View>
                         </View>
                     </View>
-                </View>
-            )} />
+                )} />
         </View>
     )
 
@@ -80,3 +86,26 @@ const styles = StyleSheet.create({
     }
 
 });
+
+
+/*
+renderItem={(itemData) => (
+                    <View style={styles.imageContainer} key={itemData.item._id}>
+                        <Image source={{ uri: itemData.item.photo }} style={styles.ImageList} resizeMode="contain" />
+                        <View style={styles.textDescription}>
+                            <Text >{itemData.item.description}</Text>
+
+                            </View>
+                            <View style={styles.textDescription}>
+                                <View style={styles.sidebyside}>
+                                    <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                                        <Text style={styles.nativeLink}>Edit</Text>
+                                    </Link>
+                                    <Link component={TouchableOpacity} style={styles.header} to="/editImage">
+                                        <Text style={styles.nativeLink}>Delete</Text>
+                                    </Link>
+                                </View>
+                            </View>
+                        </View>
+                    )} />
+*/
