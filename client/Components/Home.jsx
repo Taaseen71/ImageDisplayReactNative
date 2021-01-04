@@ -27,7 +27,7 @@ export default function Home({ imageList, setImageList, urlInput, seturlInput, u
 
             <FlatList
                 // horizontal //?Stacks Horizontally
-                inverted   //?Stacks Inverted but upsidedown. 
+                // inverted   //?Stacks Inverted but upsidedown. 
                 keyExtractor={(item, index) => index.toString()}
                 data={imageList}
                 renderItem={({ item }) => (

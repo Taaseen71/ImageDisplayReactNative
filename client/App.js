@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { StyleSheet, Text, View, Button, Image, FlatList, TextInput } from 'react-native';
 import { NativeRouter, Route, Link, Switch } from "react-router-native";
-import Home from "./Components/Home";
+// import Home from "./Components/Home";
 import CreateImage from "./Components/CreateImage"
 import EditImage from "./Components/EditImage"
 import images from './Components/imageLists.json'
 import { v4 as uuidV4 } from 'uuid'
 // import { save } from 'save-file'
+const Home = lazy(() => import('./Components/Home'))
+
 
 import axios from 'axios';
 
@@ -71,7 +73,9 @@ export default function App() {
                     </Route>
 
                     <Route exact path="/" >
-                        <Home imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} />
+                        <Suspense fallback={<Text> Loading.... </Text>}>
+                            <Home imageList={imageList} setImageList={setImageList} urlInput={urlInput} seturlInput={seturlInput} urlDescription={urlDescription} seturlDescription={seturlDescription} />
+                        </Suspense>
                     </Route>
                     <Route exact path="/editImage"><EditImage /></Route>
                 </Switch>
